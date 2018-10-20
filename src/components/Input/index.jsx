@@ -15,7 +15,10 @@ const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args));
 class Input extends React.Component<Props> {
   static defaultProps = {
     label: "Input",
-    initialValue: ""
+    initialValue: "",
+    onChange: () => {},
+    onSubmit: () => {},
+    onKeyDown: () => {}
   };
 
   constructor(props) {
