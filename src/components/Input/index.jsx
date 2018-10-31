@@ -16,9 +16,7 @@ class Input extends React.Component<Props> {
   static defaultProps = {
     label: "Input",
     initialValue: "",
-    onChange: () => {},
-    onSubmit: () => {},
-    onKeyDown: () => {}
+    onSubmit: () => {}
   };
 
   constructor(props) {
@@ -39,12 +37,17 @@ class Input extends React.Component<Props> {
   }
 
   onChange = e => {
+    const { onChange } = this.props;
     if (this.props.value !== undefined) {
-      this.props.onChange(e.target.value);
+      if (onChange) {
+        onChange(e.target.value);
+      }
     } else {
-      this.setState({ value: e.target.value }, () =>
-        this.props.onChange(this.state.value)
-      );
+      this.setState({ value: e.target.value }, () => {
+        if (onChange) {
+          onChange(this.state.value);
+        }
+      });
     }
   };
 
@@ -72,7 +75,7 @@ class Input extends React.Component<Props> {
           value={value}
           aria-label={label}
           onChange={this.onChange}
-          onKeyDown={callAll(onKeyPress, this.onKeyPress)}
+          onKeyDown={this.onKeyPress}
           {...rest}
         />
       </div>
